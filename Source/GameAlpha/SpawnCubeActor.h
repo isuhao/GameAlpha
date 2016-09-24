@@ -4,7 +4,6 @@
 
 #include "GameFramework/Actor.h"
 #include "noiseutils.h"
-#include "CustomMeshComponent.h"
 #include "SpawnCubeActor.generated.h"
 
 UCLASS()

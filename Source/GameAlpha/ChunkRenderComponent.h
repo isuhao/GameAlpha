@@ -3,13 +3,13 @@
 #pragma once
 
 #include "Components/PrimitiveComponent.h"
-#include "BrickRenderComponent.generated.h"
+#include "ChunkRenderComponent.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GAMEALPHA_API UBrickRenderComponent : public UPrimitiveComponent
+class GAMEALPHA_API UChunkRenderComponent : public UPrimitiveComponent
 {
 	GENERATED_BODY()
 	
@@ -18,5 +18,5 @@ public:
 
 	virtual FBoxSphereBounds CalcBounds(const FTransform& LocalToWorld) const override;
 	
-	
+	class UChunkMgrComponent* Mgr;
 };

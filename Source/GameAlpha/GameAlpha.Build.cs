@@ -17,10 +17,18 @@ public class GameAlpha : ModuleRules
 
 	public GameAlpha(TargetInfo Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
-        PrivateDependencyModuleNames.AddRange(new string[] { });
-        PrivateDependencyModuleNames.AddRange(new string[] { "CustomMeshComponent" });
-        PrivateIncludePathModuleNames.AddRange(new string[] { "CustomMeshComponent" });
+        PublicDependencyModuleNames.AddRange(
+            new string[]
+            {
+                            "Core",
+                            "CoreUObject",
+                            "Engine",
+                            "RenderCore",
+                            "ShaderCore",
+                            "RHI"
+            }
+        );
+        PrivateIncludePaths.Add("GameAlpha/Grid");
 
         PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "src"));
         PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "lib", "libnoise.lib"));
