@@ -34,7 +34,7 @@ void UChunkMgrComponent::Update(const FVector& WorldViewPosition)
 	FInt3 maxChunkIndex = maxCoordinate / GridParameters.GridPerChunk;
 
 	//É¾³ý³¬³öÊÓ¾àµÄ¿é
-	for (auto chunkIt = Coord2ChunkRenderComponent.CreateIterator(); chunkIt; chunkIt++)
+	for (auto chunkIt = Coord2ChunkRenderComponent.CreateIterator(); chunkIt; ++chunkIt)
 	{
 		FInt3 coord = chunkIt.Key();
 		if (coord.X * coord.X + coord.Y * coord.Y >= GridParameters.MaxRenderDistance * GridParameters.MaxRenderDistance)
