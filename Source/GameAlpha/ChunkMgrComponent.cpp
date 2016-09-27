@@ -58,6 +58,7 @@ void UChunkMgrComponent::Update(const FVector& WorldViewPosition)
 			{
 				comp = NewObject<UChunkRenderComponent>(GetOwner());
 				comp->Mgr = this;
+				comp->Coordinate = coord;
 				comp->SetRelativeLocation(coord.ToFloat());
 				comp->AttachTo(this);
 				comp->RegisterComponent();

@@ -5,6 +5,14 @@
 #include "ChunkMgrComponent.h"
 #include "LocalVertexFactory.h"
 
+enum EGridMaterialType
+{
+	EGMT_Empty,
+	EGMT_Translucent,
+	EGMT_Opaque,
+	EGMT_Count,
+};
+
 struct FBrickVertex
 {
 	uint8 x;
@@ -146,11 +154,47 @@ public:
 
 
 FPrimitiveSceneProxy* UChunkRenderComponent::CreateSceneProxy()
-{
+{	
+	TArray<EGridMaterialType> materialType;
+	for (int8 index = 0; index < this->Mgr->GridParameters.GridMaterials.Num(); ++ index)
+	{
+		if (index == this->Mgr->GridParameters.EmptyMaterialIndex)
+			materialType.Add(EGMT_Empty);
+		else
+		{
+			if (this->Mgr->GridParameters.GridMaterials[index].SurfaceMaterial->GetBlendMode() == BLEND_Translucent)
+				materialType.Add(EGMT_Translucent);
+			else
+				materialType.Add(EGMT_Opaque);
+		}
+	}
+	FChunkGridData& chunkData = this->Mgr->Coord2ChunkData.FindRef(this->Coordinate);
+	bool hasNotEmptyGrid = false;
+	for (uint32 index = 0; index < chunkData.GridMaterialIndex.Num(); ++ index)
+	{
+		if (materialType[chunkData.GridMaterialIndex[index]] != EGMT_Empty)
+			hasNotEmptyGrid = true;
+	}
+	if (hasNotEmptyGrid == false)
+		return NULL;
 	FBrickChunkProxy *pProxy = NULL;
 	pProxy = new FBrickChunkProxy(this);
 	pProxy->SetupCompleteEvent = FFunctionGraphTask::CreateAndDispatchWhenReady([=]() {
-		int a = 1;
+
+		FInt3 minCoordinate = FInt3::Max(this->Mgr->GridParameters.MinCoordinate, this->Coordinate);
+		FInt3 maxCoordinate = FInt3::Min(this->Mgr->GridParameters.MaxCoordinate, this->Coordinate + this->Mgr->GridParameters.GridPerChunk);
+		for (int32 x = minCoordinate.X; x < maxCoordinate.X; ++x)
+		{
+			for (int32 y = minCoordinate.Y; y < maxCoordinate.Y; ++y)
+			{
+				for (int32 z = minCoordinate.Z; z < maxCoordinate.Z; ++z)
+				{
+					FInt3 gridPos = FInt3(x, y, z);
+
+				}
+			}
+		}
+
 	}, TStatId(), NULL);
 	return pProxy;
 }

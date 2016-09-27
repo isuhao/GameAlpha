@@ -119,7 +119,7 @@ struct FGridMaterial
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Param)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Param)
 		UMaterialInterface* SurfaceMaterial;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Param)
 		UMaterialInterface* TopSurfaceMaterial;
@@ -157,6 +157,18 @@ struct FGridParam
 
 };
 
+USTRUCT()
+struct FChunkGridData
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY()
+		FInt3 Coordinate;
+
+	UPROPERTY()
+		TArray<uint8> GridMaterialIndex;
+};
+
 //根据Component当前所在位置以及视距来决定哪些块需要显示， 每个块里管理着所有要显示的3D格子
 
 //管理所有的块的管理器
@@ -173,11 +185,13 @@ public:
 	virtual void BeginPlay() override;
 	
 	UFUNCTION(BlueprintCallable, Category = Chunk)
-	void Update(const FVector& WorldViewPosition);
+		void Update(const FVector& WorldViewPosition);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GridParam)
 		FGridParam GridParameters;
 
 	TMap<FInt3, class UChunkRenderComponent*> Coord2ChunkRenderComponent;
-	
+
+	TMap<FInt3, FChunkGridData> Coord2ChunkData;
+
 };

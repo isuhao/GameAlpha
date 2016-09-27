@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Components/PrimitiveComponent.h"
+#include "ChunkMgrComponent.h"
 #include "ChunkRenderComponent.generated.h"
 
 /**
@@ -19,4 +20,7 @@ public:
 	virtual FBoxSphereBounds CalcBounds(const FTransform& LocalToWorld) const override;
 	
 	class UChunkMgrComponent* Mgr;
+
+	//以这个块的左上角为坐标，而不是中心
+	FInt3 Coordinate;
 };
