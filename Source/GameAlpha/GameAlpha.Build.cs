@@ -22,7 +22,6 @@ public class GameAlpha : ModuleRules
                             "RHI"
             }
         );
-        PrivateIncludePaths.Add("GameAlpha\\Grid");
         PublicIncludePaths.Add("ThirdParty\\LibNoise\\src");
         PublicAdditionalLibraries.Add(Path.Combine(ModulePath, "..\\ThirdParty\\LibNoise\\lib\\libnoise.lib"));
     }
